@@ -13,16 +13,17 @@ const config = require("../../config.json");
 module.exports = {
   data: new SlashCommandBuilder()
     .setName("globalban")
-    .setDescription("Global Ban the specified user across all associated servers")
+    .setDescription("tüm TSB sunucularından yasaklandınız.")
     .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
     .setDMPermission(false)
     .addUserOption(option =>
       option.setName('user')
-      .setDescription('The user to global ban')
+      .setDescription(' Kullanıcı genel olarak yasaklanacak' )
+
       .setRequired(true))
     .addStringOption(option =>
-      option.setName('reason')
-      .setDescription('The reason for the ban')
+      option.setName('sebep')
+      .setDescription('Yasağın sebebi')
       .setRequired(true)),
 
 
@@ -30,8 +31,8 @@ module.exports = {
 
   run: async (client, interaction) => {
     global.BanCount = client.guilds.cache.size
-    var Target = interaction.options.getUser('user')
-    var Reason = interaction.options.getString('reason')
+    var Target = interaction.options.getUser('kişi')
+    var Reason = interaction.options.getString('sebep')
 
     await interaction.deferReply({
       ephemeral: true
@@ -130,7 +131,7 @@ module.exports = {
             name: `${client.user.username} | Z-Dev `,
             iconURL: 'https://cdn.discordapp.com/attachments/712226602674552852/1084004801500688394/Z-Dev-Logo.gif'
           })
-          .setDescription(`**Global banning :**  ${Target.username}#${Target.discriminator} \n **Discord ID :** ${Target.id}\n**Discord :** <@${Target.id}> \n\n *Banned From ${BanCount} out of ${client.guilds.cache.size} guilds*`)
+          .setDescription(`**Tam yasakla :**  ${Target.username}#${Target.discriminator} \n **Discord ID :** ${Target.id}\n**Discord :** <@${Target.id}> \n\n *Tarafından ${BanCount} dışında ${client.guilds.cache.size} guilds*`)
           .setThumbnail(`https://cdn.discordapp.com/avatars/${Target.id}/${Target.avatar}.webp`)
           .setColor(0x65a4d8)
           .setImage('https://cdn.discordapp.com/attachments/712226602674552852/1083997852142936115/Z-Dev-Banner-opt.gif')
@@ -151,7 +152,7 @@ module.exports = {
         //Do not remove credits!
 
         interaction.editReply({
-          embeds: [BanSuccess],
+          embeds: [Başarıyla Tam Yasakla],
           components: [button],
           ephemeral: true
         }), 3000
