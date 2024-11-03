@@ -11,20 +11,22 @@ const {
   
   module.exports = {
     data: new SlashCommandBuilder()
-      .setName("globalunban")
-      .setDescription("Remove the Global Ban for the specified user across all associated servers")
+      .setName("tam-yasakla-kaldır")
+      .setDescription(" İlgili Tüm sunucularda belirtilen kullanıcı için Genel Yasağı kaldırın")
+
+
       .setDefaultMemberPermissions(PermissionFlagsBits.BanMembers)
       .setDMPermission(false)
       .addUserOption(option =>
-        option.setName('user')
-        .setDescription('The user to global UnBan')
+        option.setName('kişi')
+        .setDescription('Kullanıcının tam-yasaklama banı kaldırılması')
         .setRequired(true)),
   
   
   
   
     run: async (client, interaction) => {
-        var Target = interaction.options.getUser('user')
+        var Target = interaction.options.getUser('kişi')
 
         client.guilds.cache.forEach(async (guild) => {
         guild.members.unban(Target)
@@ -56,7 +58,7 @@ const {
             );
   
             interaction.reply({
-                embeds: [UnBanSuccess],
+                embeds: [Başarıyla tam-yasaklaması kaldırıldı],
                 components: [button],
                 ephemeral: true
               })
